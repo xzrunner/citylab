@@ -1,0 +1,5 @@
+citylab/
+projects/*
+
+!projects/citylab.vcxproj
+!projects/citylab.vcxproj.filters
