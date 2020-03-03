@@ -83,7 +83,7 @@ bool ShortestPathOP::OnDraw() const
         tess::Painter pt;
         pt.AddLine3D(m_start_pos, m_end_pos, [&](const sm::vec3& pos3)->sm::vec2 {
             return m_vp.TransPosProj3ToProj2(pos3, cam_mat);
-        }, 0xffffffff);
+        }, 0xff0000ff);
         pt2::RenderSystem::DrawPainter(pt);
     }
 
