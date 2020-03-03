@@ -4,7 +4,7 @@
 #include <blueprint/Pin.h>
 #include <blueprint/BackendAdapter.h>
 
-#include <citygraph/OpVarType.h>
+#include <citygraph/ParamType.h>
 
 namespace citylab
 {
@@ -16,16 +16,19 @@ Node::Node(const std::string& title)
 
 void Node::InitPins(const std::string& name)
 {
-    auto back2front = [](const dag::Node<citygraph::OpVarType>::Port& back) -> bp::PinDesc
+    auto back2front = [](const dag::Node<citygraph::ParamType>::Port& back) -> bp::PinDesc
     {
         bp::PinDesc front;
 
         switch (back.var.type)
         {
-        case citygraph::OpVarType::Heightmap:
-            front.type = PIN_HEIGHTMAP;
+        case citygraph::ParamType::HeightField:
+            front.type = PIN_HEIGHT_FIELD;
             break;
-        case citygraph::OpVarType::Path:
+        case citygraph::ParamType::TensorField:
+            front.type = PIN_TENSOR_FIELD;
+            break;
+        case citygraph::ParamType::Path:
             front.type = PIN_PATH;
             break;
         default:
@@ -37,7 +40,7 @@ void Node::InitPins(const std::string& name)
         return front;
     };
 
-    bp::BackendAdapter<citygraph::OpVarType>
+    bp::BackendAdapter<citygraph::ParamType>
         trans("citygraph", back2front);
     trans.InitNodePins(*this, name);
 }

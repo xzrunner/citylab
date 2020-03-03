@@ -4,7 +4,7 @@
 
 #include <vector>
 
-namespace ee0 { class WxStagePage; }
+namespace ee0 { class WxStagePage; class RenderContext; }
 
 namespace citylab
 {
@@ -12,12 +12,13 @@ namespace citylab
 class PreviewPage : public ee0::Observer
 {
 public:
-    PreviewPage(ee0::WxStagePage& stage_page);
+    PreviewPage(ee0::WxStagePage& stage_page, const ee0::RenderContext& rc);
     virtual ~PreviewPage();
 
     virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
-    void InitEditOP();
+private:
+    void Init(const ee0::RenderContext& rc);
 
 private:
     ee0::WxStagePage& m_stage_page;

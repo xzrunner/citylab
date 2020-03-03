@@ -5,3 +5,7 @@
 #define PARM_NODE_CLASS ShortestPath
 #define PARM_NODE_NAME shortest_path
 #include EXE_FILEPATH
+
+#define PARM_NODE_CLASS HeightField
+#define PARM_NODE_NAME height_field
+#include EXE_FILEPATH

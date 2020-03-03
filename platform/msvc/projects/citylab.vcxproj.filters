@@ -22,6 +22,9 @@
     <Filter Include="view\preview">
       <UniqueIdentifier>{053b5c88-7424-47dc-8065-a6a14361d008}</UniqueIdentifier>
     </Filter>
+    <Filter Include="view\preview\operator">
+      <UniqueIdentifier>{36a907c0-9799-414c-b4e6-daa051b6b19f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\citylab\Node.h">
@@ -55,6 +58,12 @@
       <Filter>view\preview</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\citylab\CityLab.h" />
+    <ClInclude Include="..\..\..\include\citylab\MessageID.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\citylab\ShortestPathOP.h">
+      <Filter>view\preview\operator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\Node.cpp">
@@ -73,5 +82,8 @@
       <Filter>view\preview</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\CityLab.cpp" />
+    <ClCompile Include="..\..\..\source\ShortestPathOP.cpp">
+      <Filter>view\preview\operator</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\citylab\CityLab.h" />
+    <ClInclude Include="..\..\..\include\citylab\MessageID.h" />
     <ClInclude Include="..\..\..\include\citylab\Node.h" />
     <ClInclude Include="..\..\..\include\citylab\node_def_gen.h" />
     <ClInclude Include="..\..\..\include\citylab\node_regist_cfg.h" />
@@ -21,6 +22,7 @@
     <ClInclude Include="..\..\..\include\citylab\pin_cfg.h" />
     <ClInclude Include="..\..\..\include\citylab\PreviewPage.h" />
     <ClInclude Include="..\..\..\include\citylab\RegistNodes.h" />
+    <ClInclude Include="..\..\..\include\citylab\ShortestPathOP.h" />
     <ClInclude Include="..\..\..\include\citylab\WxPreviewCanvas.h" />
   </ItemGroup>
   <ItemGroup>
@@ -29,6 +31,7 @@
     <ClCompile Include="..\..\..\source\PinCallback.cpp" />
     <ClCompile Include="..\..\..\source\PreviewPage.cpp" />
     <ClCompile Include="..\..\..\source\RegistNodes.cpp" />
+    <ClCompile Include="..\..\..\source\ShortestPathOP.cpp" />
     <ClCompile Include="..\..\..\source\WxPreviewCanvas.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
