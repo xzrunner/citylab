@@ -32,11 +32,11 @@ const uint32_t LIGHT_SELECT_COLOR = 0x88000088;
 namespace citylab
 {
 
-WxPreviewCanvas::WxPreviewCanvas(ee0::WxStagePage* stage, ECS_WORLD_PARAM
-                                 const ee0::RenderContext& rc)
-    : ee3::WxStageCanvas(stage, ECS_WORLD_VAR &rc, nullptr, true)
+WxPreviewCanvas::WxPreviewCanvas(const ur2::Device& dev, ee0::WxStagePage* stage,
+                                 ECS_WORLD_PARAM const ee0::RenderContext& rc)
+    : ee3::WxStageCanvas(dev, stage, ECS_WORLD_VAR &rc, nullptr, true)
 {
-    m_hf_rd = std::make_shared<rp::HeightfieldGrayRenderer>();
+    m_hf_rd = std::make_shared<rp::HeightfieldGrayRenderer>(dev);
 }
 
 WxPreviewCanvas::~WxPreviewCanvas()
@@ -92,14 +92,14 @@ void WxPreviewCanvas::DrawBackground3D() const
 
 void WxPreviewCanvas::DrawForeground3D() const
 {
-    auto& shaders = m_hf_rd->GetAllShaders();
-    if (!shaders.empty()) {
-        assert(shaders.size() == 1);
-        auto& wc = std::const_pointer_cast<pt3::WindowContext>(GetWidnowContext().wc3);
-        if (shaders[0]->get_type() == rttr::type::get<pt3::Shader>()) {
-            std::static_pointer_cast<pt3::Shader>(shaders[0])->AddNotify(wc);
-        }
-    }
+    //auto& shaders = m_hf_rd->GetAllShaders();
+    //if (!shaders.empty()) {
+    //    assert(shaders.size() == 1);
+    //    auto& wc = std::const_pointer_cast<pt3::WindowContext>(GetWidnowContext().wc3);
+    //    if (shaders[0]->get_type() == rttr::type::get<pt3::Shader>()) {
+    //        std::static_pointer_cast<pt3::Shader>(shaders[0])->AddNotify(wc);
+    //    }
+    //}
 
     pt0::RenderContext rc;
     rc.AddVar(
@@ -114,16 +114,16 @@ void WxPreviewCanvas::DrawForeground3D() const
             pt0::RenderVariant(persp->GetPos())
         );
     }
-    auto& wc = pt3::Blackboard::Instance()->GetWindowContext();
-    assert(wc);
-    rc.AddVar(
-        pt3::MaterialMgr::PosTransUniforms::view.name,
-        pt0::RenderVariant(wc->GetViewMat())
-    );
-    rc.AddVar(
-        pt3::MaterialMgr::PosTransUniforms::projection.name,
-        pt0::RenderVariant(wc->GetProjMat())
-    );
+    //auto& wc = pt3::Blackboard::Instance()->GetWindowContext();
+    //assert(wc);
+    //rc.AddVar(
+    //    pt3::MaterialMgr::PosTransUniforms::view.name,
+    //    pt0::RenderVariant(wc->GetViewMat())
+    //);
+    //rc.AddVar(
+    //    pt3::MaterialMgr::PosTransUniforms::projection.name,
+    //    pt0::RenderVariant(wc->GetProjMat())
+    //);
 
     tess::Painter pt;
 
@@ -131,7 +131,8 @@ void WxPreviewCanvas::DrawForeground3D() const
 
     DrawSelected(pt, cam_mat, rc);
 
-    pt2::RenderSystem::DrawPainter(pt);
+    ur2::RenderState rs;
+    pt2::RenderSystem::DrawPainter(m_dev, *GetRenderContext().ur_ctx, rs, pt);
 }
 
 void WxPreviewCanvas::DrawForeground2D() const
@@ -177,9 +178,11 @@ void WxPreviewCanvas::DrawSelected(tess::Painter& pt, const sm::mat4& cam_mat,
         return;
     }
 
+    auto& ctx = *GetRenderContext().ur_ctx;
+
     auto hf = op->GetHeightField();
     if (hf) {
-        m_hf_rd->Draw();
+        m_hf_rd->Draw(ctx);
     }
 
     auto& vals = op->GetAllValues();
@@ -195,7 +198,9 @@ void WxPreviewCanvas::DrawSelected(tess::Painter& pt, const sm::mat4& cam_mat,
             pt.AddPolyline3D(path.data(), path.size(), [&](const sm::vec3& pos3)->sm::vec2 {
                 return GetViewport().TransPosProj3ToProj2(pos3, cam_mat);
             }, 0xff0000ff);
-            pt2::RenderSystem::DrawPainter(pt);
+
+            ur2::RenderState rs;
+            pt2::RenderSystem::DrawPainter(m_dev, ctx, rs, pt);
         }
             break;
         }
@@ -211,7 +216,7 @@ void WxPreviewCanvas::SetupRenderer()
 
     auto hf = op->GetHeightField();
     if (hf) {
-        m_hf_rd->Setup(hf);
+        m_hf_rd->Setup(m_dev, *GetRenderContext().ur_ctx, hf);
         SetDirty();
     }
 }
