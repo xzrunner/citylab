@@ -22,7 +22,7 @@ public:
     virtual bool OnMouseLeftUp(int x, int y) override;
     virtual bool OnMouseDrag(int x, int y) override;
 
-    virtual bool OnDraw(const ur2::Device& dev, ur2::Context& ctx) const;
+    virtual bool OnDraw(const ur::Device& dev, ur::Context& ctx) const;
 
     void Setup(const std::shared_ptr<node::ShortestPath>& node,
         const n0::SceneNodePtr& editor_node)

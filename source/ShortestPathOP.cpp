@@ -8,7 +8,7 @@
 #include <SM_Ray.h>
 #include <SM_RayIntersect.h>
 #include <tessellation/Painter.h>
-#include <unirender2/RenderState.h>
+#include <unirender/RenderState.h>
 #include <painting2/RenderSystem.h>
 #include <painting3/Viewport.h>
 #include <painting3/PerspCam.h>
@@ -71,7 +71,7 @@ bool ShortestPathOP::OnMouseDrag(int x, int y)
     return false;
 }
 
-bool ShortestPathOP::OnDraw(const ur2::Device& dev, ur2::Context& ctx) const
+bool ShortestPathOP::OnDraw(const ur::Device& dev, ur::Context& ctx) const
 {
     if (ee3::WorldTravelOP::OnDraw(dev, ctx)) {
         return true;
@@ -86,7 +86,7 @@ bool ShortestPathOP::OnDraw(const ur2::Device& dev, ur2::Context& ctx) const
             return m_vp.TransPosProj3ToProj2(pos3, cam_mat);
         }, 0xff0000ff);
 
-        ur2::RenderState rs;
+        ur::RenderState rs;
         pt2::RenderSystem::DrawPainter(dev, ctx, rs, pt);
     }
 
