@@ -182,9 +182,9 @@ void WxPreviewCanvas::DrawSelected(tess::Painter& pt, const sm::mat4& cam_mat,
 
     auto hf = op->GetHeightField();
     if (hf) {
-        m_hf_rd->Draw(ctx);
+        auto& wc = std::const_pointer_cast<pt3::WindowContext>(GetWidnowContext().wc3);
+        m_hf_rd->Draw(m_dev, ctx, *wc);
     }
-
     auto& vals = op->GetAllValues();
     for (auto& v : vals)
     {
